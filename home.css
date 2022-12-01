@@ -1,0 +1,23 @@
+#div1 {
+    width: 700px;
+    height: 200px; 
+    padding: 10px; 
+    border: 1px solid black;
+}
+#div2 {
+    width: 700px;
+    height: 200px; 
+    padding: 10px; 
+    border: 1px  solid black;
+}
+table {
+    border-collapse: collapse;
+}
+th, td {
+    width: 200px;
+    border:  solid 1px #000;;
+    
+}
+td {
+    text-align: center;
+}
