@@ -9,7 +9,8 @@ addActorBt.addEventListener("click", function() {
         var input   = document.createElement('input'); 
 		input.type   = 'text'; 
         input.class = "actor";
-		input.name  = "actor" + actorsCount; 
+		input.name  = "actor"; 
+        input.setAttribute("class","actor");
         input.style = "width:90px"  ;
         actorList.appendChild(input);
         actorsCount++;
@@ -63,7 +64,7 @@ searchTheater.addEventListener("click", function() {
 var contain = function(value) {
     return value === inputDate;
 }
-
+var poster = document.getElementById("poster");
 // 상영정보 추가하기
 var addMovie =document.getElementById("addMovie");
 addMovie.addEventListener("click", function() {
@@ -87,41 +88,117 @@ addMovie.addEventListener("click", function() {
         var textNode = document.createTextNode(text);
         info.style =  "width:200px;  border: 1px solid black; "
         info.append(textNode);
-        info.id = "resultTheater";
+        info.setAttribute("class","theaterList");
         result.append(info);
     }
     
 })
 
-const elImage = document.getElementById("poster");
-elImage.addEventListener("change", (evt) => {
-  const image = evt.target.files[0];
-  if(!validImageType(image)) { 
-    console.warn("invalide image file type");
-    return;
-  }
+var movieIdGenerator = 0;
+var screnningIdGenerator = 0;
+const defaultMovieId = "m";
+const defaultScrenningId = "r";
+
+var a = document.getElementById("picBt");
+a.addEventListener("click", function() {
+    var pic = document.getElementById("fileUpload");
+    console.log(pic.value);
+})
+$(function(){
+    $('#submit').on("click",function () {
+        var name = $("#movieName").val();
+        var genre = $(".genre").val();
+        var director = $("#director").val();
+        var actorList = document.getElementsByClassName("actor");
+        var theaterList = document.querySelectorAll(".theaterList"); //상영 리스트 
+        var pic = document.getElementById("fileUpload").value;
+
+        const changeActorList = new Array();
+        for (let index = 0; index < actorList.length; index++) {
+            changeActorList.push(actorList[index].value);
+        }
+        const changeTheaterList = new Array();
+        for (let index = 0; index < theaterList.length; index++) {
+            console.log("영화관 정보 확인해보기")
+            console.log(theaterList.item(index));            console.log(theaterList.item(index).textContent);
+            changeTheaterList.push(theaterList.item(index).textContent);
+        }
+        
+
+        console.log("name" + name);
+        console.log("genre" + genre);
+        console.log("dir" + director);
+        console.log("actors" + changeActorList);
+        console.log("theaters" + changeTheaterList);
+        console.log("pic" + pic);
+        // 영화 객체 생성
+        var movieId = defaultMovieId + movieIdGenerator;
+        movieIdGenerator++;
+        const movie = new Movie(movieId, name, genre, director, changeActorList, pic);
+        console.log("Movie Object: " + JSON.stringify(movie));
+        $.ajax({
+            type: "post",
+            url: "store.php",
+            data: { movieObject : JSON.stringify(movie) },
+          
+            success: function (data) {
+                alert("success");
+                console.log(data);
+            },
+            error: function (request, status, error) {
+                console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+
+            }
+        });
+
+        // 스케쥴 객체 생성 
+        for (let index = 0; index < changeTheaterList.length; index++) {
+            var screnningId = defaultScrenningId + screnningIdGenerator;
+            screnningIdGenerator++;
+            var element = changeTheaterList[index];
+            console.log(element)
+            elementList = element.split(",");
+            var date = elementList[0];
+            var theaterName = elementList[1];
+            const screening = new Screening(screnningId, date, movieId, theaterName, 0);
+            console.log("Screnning Object: " + JSON.stringify(screening));
+            $.ajax({
+                type: "post",
+                url: "store.php",
+                data: { screeningObject : JSON.stringify(screening) },
+                
+                success: function (data) {
+                    alert("success");
+                    console.log(data);
+                },
+                error: function (request, status, error) {
+                    console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+    
+                }
+            });
+        }
+        
+    });
 });
 
-function valideImageType(image) {
-  const result = ([ 'image/jpeg',
-                    'image/png',
-                    'image/jpg' ].indexOf(image.type) > -1);
-  return result;
+function Screening( id, date, movie_id, screnning_id, reserve_seat) {
+    this.id = id;
+    this.date = date;
+    this.movie_id = movie_id;
+    this.screnning_id = screnning_id;
+    this.reserve_seat = reserve_seat;
 }
 
-var poster = document.getElementById("poster");
+function Movie(id, movie, genre, director, actors, file_name) {
+    this.id = id;
+    this.movie = movie;
+    this.genre = genre;
+    this.director = director;
+    this.actors = actors;
+    this.file_name = file_name;
 
-$(function() {
-    $("#search_box").keyup(function() {
-        var myval = $("input[name=contact]:checked").val();
-        $.ajax({
-            url: "./store.php",
-            data: { keyword : $(this).val(), contact : myval},
-            method: "POST"
-        })
+}
 
-        .done(function(result) {
-            $(".suggestion_box").html(result);
-        })
-    })
-});
+
+
+

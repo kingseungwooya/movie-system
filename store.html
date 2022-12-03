@@ -13,51 +13,50 @@
 <body>
         <h1>영화 저장 페이지</h1>
         <br><br>
-
-        <form method="post" action = "store.php">
-                <a>영화제목: </a> <input type="text" name="movieName" id="movieName">
-            <br><br>
-            <a>장르:</a>
-            <select class="genre">
-                <option value="drama">드라마</option>
-                <option value="animation">애니메이션</option>
-                <option value="comedy">코메디</option>
-            </select> 
-            <br><br>
-            <a>감독: </a><input type="text" name="director"id ="director">
-            <br><br>
-            
+        <a>영화제목: </a> <input type="text" name="movieName" id="movieName">
+        <br><br>
+        <a>장르:</a>
+        <select class="genre">
+            <option value="drama">드라마</option>
+            <option value="animation">애니메이션</option>
+            <option value="comedy">코메디</option>
+        </select> 
+        <br><br>
+        <a>감독: </a><input type="text" name="director"id ="director">
+        <br><br>
+        
+        <div>
+            <div id = "actorList">
+                <a>출연자: </a><input type="text" class="actor" name="actor">
+            </div>
             <div>
-                <div id = "actorList">
-                    <a>출연자: </a><input type="text" class="actor" name="actor">
-                </div>
-                <div>
-                    <button id = "addActorBt">출연자 추가</button>
-                    <button id = "deleteActorBt">출연자 삭제</button>
-                </div>
-                
+                <button id = "addActorBt">출연자 추가</button>
+                <button id = "deleteActorBt">출연자 삭제</button>
             </div>
             
-            <br><br>
-            <a>상영 날짜: </a><input type="date" name="openDate"id ="openDate">
-            <button id = "searchTheater" >상영관 검색</button>
-            <button id = "addMovie" disabled>상영 정보 추가</button>
-            <br><br>
-            <a>상영 장소: </a>
-            상영관 1<input type="radio" class = "place" name ="place" value="상영관 1" disabled>
-            상영관 2<input type="radio" class = "place" name ="place" value="상영관 2" disabled>
-            상영관 3<input type="radio" class = "place" name ="place" value="상영관 3" disabled>
-            <br>
-            <div id = "theaterList"></div>
-            <br>
+        </div>
+        
+        <br><br>
+        <a>상영 날짜: </a><input type="date" name="openDate"id ="openDate">
+        <button id = "searchTheater" >상영관 검색</button>
+        <button id = "addMovie" disabled>상영 정보 추가</button>
+        <br><br>
+        <a>상영 장소: </a>
+        상영관 1<input type="radio" class = "place" name ="place" value="상영관 1" disabled>
+        상영관 2<input type="radio" class = "place" name ="place" value="상영관 2" disabled>
+        상영관 3<input type="radio" class = "place" name ="place" value="상영관 3" disabled>
+        <br>
+        <div id = "theaterList"></div>
+        <br>
 
-            <a>포스터 화일: </a>
-            <input type="file" id="fileUpload" id="poster" name="poster"
-            accept="image/png, image/jpeg">/>
-        <br> <br>
-            <a>            </a>
-            <input type="submit" value ="저장">
-        </form>
+        <a>포스터 화일: </a>
+        <input type="file" id="fileUpload" id="poster" name="poster"
+        accept="image/png, image/jpeg">
+    <br> <br>
+        <a>            </a>
+        <button id = "picBt">사진 테스트용</button>
+        <button id = "submit">저장</button>
+        
         
 
 
