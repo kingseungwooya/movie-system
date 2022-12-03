@@ -98,7 +98,7 @@ var movieIdGenerator = 0;
 var screnningIdGenerator = 0;
 const defaultMovieId = "m";
 const defaultScrenningId = "r";
-
+var isSuccess;
 var a = document.getElementById("picBt");
 a.addEventListener("click", function() {
     var pic = document.getElementById("fileUpload");
@@ -138,14 +138,15 @@ $(function(){
         console.log("Movie Object: " + JSON.stringify(movie));
         $.ajax({
             type: "post",
-            url: "store.php",
+            url: "storeMovie.php",
             data: { movieObject : JSON.stringify(movie) },
           
             success: function (data) {
-                alert("success");
+                isSuccess = true;
                 console.log(data);
             },
             error: function (request, status, error) {
+                isSuccess = false;
                 console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
 
             }
@@ -164,18 +165,22 @@ $(function(){
             console.log("Screnning Object: " + JSON.stringify(screening));
             $.ajax({
                 type: "post",
-                url: "store.php",
+                url: "storeSchedule.php",
                 data: { screeningObject : JSON.stringify(screening) },
                 
                 success: function (data) {
-                    alert("success");
+                    isSuccess = true;
                     console.log(data);
                 },
                 error: function (request, status, error) {
+                    isSuccess = false;
                     console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
     
                 }
             });
+        }
+        if(isSuccess) {
+            alert(" 영화 정보 저장에 성공하셨습니다.")
         }
         
     });
@@ -191,7 +196,7 @@ function Screening( id, date, movie_id, screnning_id, reserve_seat) {
 
 function Movie(id, movie, genre, director, actors, file_name) {
     this.id = id;
-    this.movie = movie;
+    this.movie_name = movie;
     this.genre = genre;
     this.director = director;
     this.actors = actors;
