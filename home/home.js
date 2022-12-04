@@ -18,6 +18,7 @@ submitBt.addEventListener("click", function() {
   var inputId = document.getElementById("loginId").value;
   var inputPw = document.getElementById("loginPw").value;
   if(inputValidation(inputId, inputPw)) {
+    
 
   }
 })
@@ -54,10 +55,12 @@ function inputValidation(inputId, inputPw) {
 
   if(!patternId.test(inputId)) {
     alert("ID" + message)
+    document.querySelector(".modal").classList.add("hidden");
     return false;
   }
   if(!patternPw.test(inputPw)) {
     alert("PW" + message)
+    document.querySelector(".modal").classList.add("hidden");
     return false;
   }
   return true;
