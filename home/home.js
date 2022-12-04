@@ -12,34 +12,61 @@ document.querySelector(".bg").addEventListener("click", close);
 
 var submitBt = document.getElementById("submitBt"); 
 var signInBt = document.getElementById("signInBt");
-
+var inputId;
 // 로그인
 submitBt.addEventListener("click", function() {
-  var inputId = document.getElementById("loginId").value;
+  inputId = document.getElementById("loginId").value;
   var inputPw = document.getElementById("loginPw").value;
   if(inputValidation(inputId, inputPw)) {
-    // 기존 노드
     var openBtn = document.querySelector(".openBtn");
+
+    var topBar = document.getElementById("topBar");
+    var textNew;
+    if(openBtn.textContent == "로그인"){
+      textNew = document.createTextNode("로그아웃");
+      // 버튼 앞에 아이디 추가 
+      var textNode = document.createTextNode(inputId);
+
+      var aNode = document.createElement("a");
+      aNode.setAttribute("class", "idtext")
+      aNode.style.width = "70px";
+      aNode.append(textNode);
+      appendFirst(topBar, aNode);
+    }
+    
 
     // 교체할 노드 만들기
     var newOpenBt = document.createElement("button");
-    var textNew = document.createTextNode("로그아웃");
     newOpenBt.setAttribute("class","openBtn");
+    newOpenBt.setAttribute("onclick", "logoutClick()")
     newOpenBt.appendChild(textNew);
 
     // 노드 교체
     openBtn.replaceWith(newOpenBt);
 
-    // 버튼 앞에 아이디 추가 
-    var textNode = document.createTextNode(inputId);
-    var topBar = document.getElementById("topBar");
-
-    appendFirst(topBar, textNode);
-   
-    
-
   }
 })
+
+function logoutClick() {
+  var openBtn = document.querySelector(".openBtn");
+  var topBar = document.getElementById("topBar");
+  var textNew;
+  console.log("려시레료")
+  if(openBtn.textContent == "로그아웃"){
+    console.log("로그아웃");
+    textNew = document.createTextNode("로그인");
+    
+    // 교체할 노드 만들기
+    var newOpenBt = document.createElement("button");
+    newOpenBt.setAttribute("class","openBtn");
+    newOpenBt.appendChild(textNew);
+
+    // 노드 교체
+    openBtn.replaceWith(newOpenBt);
+    var txt = document.querySelector(".idtext");
+    topBar.removeChild(txt);
+  }    
+}
 
 
 function appendFirst(node, childNode) {
