@@ -22,19 +22,28 @@ a {
 #searchBt {
   text-align: left;
   left: 10%;
-  position: absolute;
+  position: fixed;
 }
 
 #movieName {
   width: 80%;
 }
+#submitBt, #signInBt {
+  display:inline-block;
+}
+.closeBtn {
+  top: auto;
+    right: 0;
+    display: block;
+    position: inherit;
+}
+.openBtn  {
+  padding: 5px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+}
 
-button {
-    
-    padding: 5px 10px;
-    border-radius: 4px;
-    cursor: pointer;
-  }
+
 
   .modal {
     position: fixed;
@@ -50,15 +59,15 @@ button {
   .modal .bg {
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.6);
+    
   }
 
   .modalBox {
     position: absolute;
-    background-color: #fff;
-    width: 400px;
-    height: 200px;
-    padding: 15px;
+    background-color: palegreen;
+    width: 275px;
+    height: 150px;
+    padding: 17px;
   }
 
   .modalBox button {
