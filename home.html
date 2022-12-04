@@ -5,38 +5,35 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="11w-2 copy.css">
+    <link rel="stylesheet" href="home.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> 
-
-
+    
+    
 </head>
 <body>
-    
+    <button class="openBtn">로그인</button>예약정보
+<div class="modal hidden">
+  <div class="bg"></div>
+  <div class="modalBox">
+    <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Consectetur quam nobis quis corrupti amet maxime neque, optio, in illo, voluptatibus consequuntur! Rerum quo ea nulla qui, maxime consectetur magni soluta!</p>
+    <button class="closeBtn">✖</button>
+  </div>
+</div>
 
-        이름: <input type="text" name="name" id="name">
-        <br><br>
-        웹프로그래밍: <input type="text" name="web" id ="web">
-        IT영어: <input type="text" name="eng"id ="eng">
-        창업실습: <input type="text" id ="chang" name="chang">
-        <br><br>
-        이수과목1: <input type="text" name="isu1"id ="isu1">
-        <br><br>
-        <button id = "store">저장</button>
-        <br><br>
-
+  
+    <h1>영화 검색하기</h1>
+    <div id = "searchBox">
+        <input type = "text">
+        <button id = "searchBt">영화 검색</button>
+    </div>
     <br>
-    <button id="addSubject">
-        새로 추가할 과목 
-    </button><br><br>
-    <div id = "resultBox"></div><Br><br>
+    <br>
 
-    
-    이름: <input type="text" id ="searchByName"> 
-    <button id = searchBt> 검색</button>
-    <div id="resultBox2"></div>
-    
+    <div id = "resultTable">
+
+    </div>
 
 
-    <script type="text/javascript" src="11w-2 copy.js"></script>
+    <script type="text/javascript" src="home.js"></script>
 </body>
 </html>
