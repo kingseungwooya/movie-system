@@ -123,7 +123,6 @@ $(function(){
             console.log(theaterList.item(index));            console.log(theaterList.item(index).textContent);
             changeTheaterList.push(theaterList.item(index).textContent);
         }
-        
 
         console.log("name" + name);
         console.log("genre" + genre);
@@ -131,6 +130,7 @@ $(function(){
         console.log("actors" + changeActorList);
         console.log("theaters" + changeTheaterList);
         console.log("pic" + pic);
+        
         // 영화 객체 생성
         var movieId = defaultMovieId + movieIdGenerator;
         movieIdGenerator++;
