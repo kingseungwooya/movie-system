@@ -5,5 +5,5 @@
 
     fwrite($myfile, $screeningObject ."\n");
 
-    echo $screeningObject -> movie_id;
+    echo $screeningObject;
 ?>

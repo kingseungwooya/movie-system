@@ -133,11 +133,12 @@ function Person(id, pw) {
 }
 
 // 영화 검색
-var key = document.getElementById("keyword");
 
 var searchBt = document.getElementById("searchBt");
 
 searchBt.addEventListener("click", function () {
+  var key = document.getElementById("keyword").value;
+  console.log(key);
   $.ajax({
     type: "post",
     url: "search.php",
@@ -145,8 +146,92 @@ searchBt.addEventListener("click", function () {
       keyword: key,
     },
     success: function (data) {
-      $(".resultTable").html(result);
+      // 결과를 띄울 부분
+      var resultTable = document.querySelector(".resultTable");
+
+      // create table
+      let table = document.createElement("table");
+      let thead = document.createElement("thead");
+      let tbody = document.createElement("tbody");
+      thead.style.backgroundColor = "green";
+      // setting theead
+      let row_1 = document.createElement("tr");
+      let heading_1 = document.createElement("th");
+      heading_1.innerHTML = "선택";
+      let heading_2 = document.createElement("th");
+      heading_2.innerHTML = "영화제목";
+      let heading_3 = document.createElement("th");
+      heading_3.innerHTML = "장르";
+      let heading_4 = document.createElement("th");
+      heading_4.innerHTML = "감독";
+      let heading_5 = document.createElement("th");
+      heading_5.innerHTML = "배우";
+      let heading_6 = document.createElement("th");
+      heading_6.innerHTML = "화일";
+
+      row_1.appendChild(heading_1);
+      row_1.appendChild(heading_2);
+      row_1.appendChild(heading_3);
+      row_1.appendChild(heading_4);
+      row_1.appendChild(heading_5);
+      row_1.appendChild(heading_6);
+      thead.appendChild(row_1);
       console.log(data);
+
+      // response 추가
+
+      jsonData = JSON.parse(data);
+      for (let index = 0; index < jsonData.length; index++) {
+        let row = document.createElement("tr");
+
+        const element = jsonData[index];
+        const id = element["id"];
+        const movie_name = element["movie_name"];
+        const genre = element["genre"];
+        const director = element["director"];
+        const actors = element["actors"];
+        const file_name = element["file_name"];
+
+        // 선택 radiobox만들기
+        let heading_1 = document.createElement("th");
+        var radiobox = document.createElement("input");
+        radiobox.type = "radio";
+        radiobox.setAttribute("name", "selectMovie");
+        radiobox.value = id;
+        heading_1.appendChild(radiobox);
+
+        //영화 제목
+        let heading_2 = document.createElement("th");
+        heading_2.innerHTML = movie_name;
+        let heading_3 = document.createElement("th");
+        heading_3.innerHTML = genre;
+        let heading_4 = document.createElement("th");
+        heading_4.innerHTML = director;
+        let heading_5 = document.createElement("th");
+        heading_5.innerHTML = actors;
+        let heading_6 = document.createElement("th");
+        let imageLink = document.createElement("a");
+        imageLink.setAttribute("href", file_name);
+        var textNode = document.createTextNode("미리보기");
+        imageLink.appendChild(textNode);
+        imageLink.innerText = "미리보기";
+        heading_6.appendChild(imageLink);
+        
+
+        row.appendChild(heading_1);
+        row.appendChild(heading_2);
+        row.appendChild(heading_3);
+        row.appendChild(heading_4);
+        row.appendChild(heading_5);
+        row.appendChild(heading_6);
+        tbody.appendChild(row);
+        table.appendChild(tbody);
+      }
+      table.appendChild(thead);
+      resultTable.appendChild(table);
+      console.log(JSON.parse(data));
+
+      //$(".resultTable").html(data.length);
     },
     error: function (request, status, error) {
       console.log(
