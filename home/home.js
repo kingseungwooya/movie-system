@@ -231,6 +231,36 @@ searchBt.addEventListener("click", function () {
       resultTable.appendChild(table);
       console.log(JSON.parse(data));
 
+      // 예약 접수 부분 
+      var divisionOfReservation = document.createElement("div");
+      var reserveText = document.createTextNode("예약 할 인원 : ");
+      var inputNumber = document.createElement("input");
+      inputNumber.type = "text";
+      var nextLine = document.createElement("div");
+      nextLine.innerHTML =  '<br/>' ;
+      inputNumber.id = "reservationNumber";
+      inputNumber.type = "text";
+      divisionOfReservation.appendChild(nextLine);
+      divisionOfReservation.appendChild(reserveText);
+      divisionOfReservation.appendChild(inputNumber);
+      divisionOfReservation.appendChild(nextLine);
+      divisionOfReservation.appendChild(nextLine);
+
+      // 버튼 추가 
+      var reserveBt = document.createElement("button");
+      reserveBt.id = "reserveBt";
+      reserveBt.innerHTML = "예약";
+      var cancleBt = document.createElement("button");
+      cancleBt.id = "cancleBt";
+      cancleBt.innerHTML = "닫기";
+      divisionOfReservation.appendChild(reserveBt);
+      divisionOfReservation.appendChild(cancleBt);
+
+      var reservationForm = document.querySelector(".reservationForm");
+
+
+      reservationForm.appendChild(divisionOfReservation)
+
       //$(".resultTable").html(data.length);
     },
     error: function (request, status, error) {
@@ -247,3 +277,5 @@ searchBt.addEventListener("click", function () {
     },
   });
 });
+
+

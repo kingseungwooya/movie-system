@@ -85,3 +85,13 @@ a {
   width: 0px;
   color: blue;
 }
+.resultTable {
+  text-align: center;
+}
+table {
+  margin-left: 10%;
+  margin-right: 10%;
+}
+.reservationForm {
+  margin-left: 10%;
+}
