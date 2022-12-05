@@ -4,5 +4,5 @@
     $myfile = fopen("movie.json", "a");
     fwrite($myfile, $data ."\n");
 
-    echo $movieObject -> movie;
+    echo $data -> movie_name;
 ?>

@@ -1,8 +1,7 @@
-
 h1 {
-    color:aquamarine;
-    text-align: center;
-    display: block;
+  color: aquamarine;
+  text-align: center;
+  display: block;
 }
 a {
   display: inline-block;
@@ -14,7 +13,7 @@ a {
   float: right;
   position: absolute;
   right: 0;
-  top:0;
+  top: 0;
 }
 #searchDiv {
   text-align: center;
@@ -28,16 +27,17 @@ a {
 #movieName {
   width: 80%;
 }
-#submitBt, #signInBt {
-  display:inline-block;
+#submitBt,
+#signInBt {
+  display: inline-block;
 }
 .closeBtn {
   top: auto;
-    right: 0;
-    display: block;
-    position: inherit;
+  right: 0;
+  display: block;
+  position: inherit;
 }
-.openBtn  {
+.openBtn {
   padding: 5px 10px;
   border-radius: 4px;
   cursor: pointer;
@@ -48,43 +48,40 @@ a {
   cursor: pointer;
 }
 
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
+.modal .bg {
+  width: 100%;
+  height: 100%;
+}
 
-  .modal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
+.modalBox {
+  position: absolute;
+  background-color: palegreen;
+  width: 275px;
+  height: 150px;
+  padding: 17px;
+}
 
-  .modal .bg {
-    width: 100%;
-    height: 100%;
-    
-  }
+.modalBox button {
+  display: block;
+  width: 80px;
+  margin: 0 auto;
+}
 
-  .modalBox {
-    position: absolute;
-    background-color: palegreen;
-    width: 275px;
-    height: 150px;
-    padding: 17px;
-  }
-
-  .modalBox button {
-    display: block;
-    width: 80px;
-    margin: 0 auto;
-  }
-
-  .hidden {
-    display: none;
-  }
-  .idText {
-    width: 0px;
-    color: blue;
-  }
+.hidden {
+  display: none;
+}
+.idText {
+  width: 0px;
+  color: blue;
+}
