@@ -216,7 +216,6 @@ searchBt.addEventListener("click", function () {
         imageLink.appendChild(textNode);
         imageLink.innerText = "미리보기";
         heading_6.appendChild(imageLink);
-        
 
         row.appendChild(heading_1);
         row.appendChild(heading_2);
@@ -233,9 +232,9 @@ searchBt.addEventListener("click", function () {
 
       // 줄바꿈 요소
       var nextLine = document.createElement("div");
-      nextLine.innerHTML =  '<br/>' ;
+      nextLine.innerHTML = "<br/>";
 
-      // 버튼 추가 
+      // 버튼 추가
       var searchTheaterBt = document.createElement("button");
       searchTheaterBt.id = "searchTheaterBt";
       searchTheaterBt.innerHTML = "상영관 검색하기";
@@ -265,50 +264,147 @@ searchBt.addEventListener("click", function () {
   });
 });
 
-function reserve() {
-  
-      // 예약 접수 부분 
-      var divisionOfReservation = document.createElement("div");
-      var reserveText = document.createTextNode("예약 할 인원 : ");
-      var inputNumber = document.createElement("input");
-      inputNumber.type = "text";
-      var nextLine = document.createElement("div");
-      nextLine.innerHTML =  '<br/>' ;
-      inputNumber.id = "reservationNumber";
-      inputNumber.type = "text";
-      divisionOfReservation.appendChild(nextLine);
-      divisionOfReservation.appendChild(reserveText);
-      divisionOfReservation.appendChild(inputNumber);
-      divisionOfReservation.appendChild(nextLine);
-      divisionOfReservation.appendChild(nextLine);
-
-      // 버튼 추가 
-      var reserveBt = document.createElement("button");
-      reserveBt.id = "reserveBt";
-      reserveBt.innerHTML = "예약";
-      var cancleBt = document.createElement("button");
-      cancleBt.id = "cancleBt";
-      cancleBt.innerHTML = "닫기";
-      divisionOfReservation.appendChild(reserveBt);
-      divisionOfReservation.appendChild(cancleBt);
-
-      var reservationForm = document.querySelector(".reservationForm");
-      reservationForm.appendChild(divisionOfReservation)
-
-      makeEvent();
-}
+// 상영 시간표 검색
 
 function showSchedule() {
   var searchTheaterBt = document.getElementById("searchTheaterBt");
-  searchTheaterBt.addEventListener("click", function() {
+  searchTheaterBt.addEventListener("click", function () {
     var selectedMovie = document.getElementsByName("selectMovie");
-    for (var radio of selectedMovie)
-      { // check된 값 확인 check된 값의 value에는 movie_id가 존재한다. !
-          if (radio.checked) {
-              var movie_id = radio.value;
-          }
+    //alert("ㅎㅇ");
+    for (var radio of selectedMovie) {
+      // check된 값 확인 check된 값의 value에는 movie_id가 존재한다. !
+      if (radio.checked) {
+        var movie_id = radio.value;
+        $.ajax({
+          type: "post",
+          url: "searchTheater.php",
+          data: { movieId: movie_id },
+          success: function (data) {
+            // 상영정보 찾았으면 다시 테이블 보여주기
+            console.log(data);
+            // 결과를 띄울 부분
+            var resultTable = document.querySelector(".resultTable");
+            // 전에 있던것들 모두 제거
+            resultTable.replaceChildren();
+
+            // create table
+            let table = document.createElement("table");
+            let thead = document.createElement("thead");
+            let tbody = document.createElement("tbody");
+            thead.style.backgroundColor = "green";
+            // setting theead
+            let row_1 = document.createElement("tr");
+            let heading_1 = document.createElement("th");
+            heading_1.innerHTML = "선택";
+            let heading_2 = document.createElement("th");
+            heading_2.innerHTML = "상영 날짜";
+            let heading_3 = document.createElement("th");
+            heading_3.innerHTML = "상영관";
+            let heading_4 = document.createElement("th");
+            heading_4.innerHTML = "예약수";
+
+            row_1.appendChild(heading_1);
+            row_1.appendChild(heading_2);
+            row_1.appendChild(heading_3);
+            row_1.appendChild(heading_4);
+            thead.appendChild(row_1);
+            console.log(data);
+
+            // response 추가
+
+            jsonData = JSON.parse(data);
+            for (let index = 0; index < jsonData.length; index++) {
+              let row = document.createElement("tr");
+
+              const element = jsonData[index];
+              const id = element["id"];
+              const movie_name = element["movie_name"];
+              const date = element["date"];
+              const movieId = element["movie_id"];
+              const screnningId = element["screnning_id"];
+              const reserveSeat = element["reserve_seat"];
+
+              // 선택 radiobox만들기
+              let heading_1 = document.createElement("th");
+              var radiobox = document.createElement("input");
+              radiobox.type = "radio";
+              radiobox.setAttribute("name", "selectSchedule");
+              radiobox.value = id;
+              heading_1.appendChild(radiobox);
+
+              // 테이블 정보
+              let heading_2 = document.createElement("th");
+              heading_2.innerHTML = date;
+              let heading_3 = document.createElement("th");
+              heading_3.innerHTML = screnningId;
+              let heading_4 = document.createElement("th");
+              heading_4.innerHTML = reserveSeat;
+
+              row.appendChild(heading_1);
+              row.appendChild(heading_2);
+              row.appendChild(heading_3);
+              row.appendChild(heading_4);
+              tbody.appendChild(row);
+              table.appendChild(tbody);
+            }
+            table.appendChild(thead);
+            resultTable.appendChild(table);
+            console.log(JSON.parse(data));
+
+            // 줄바꿈 요소
+            var nextLine = document.createElement("div");
+            nextLine.innerHTML = "<br/>";
+
+            // 예약 접수 부분
+            var divisionOfReservation = document.createElement("div");
+            var reserveText = document.createTextNode("예약 할 인원 : ");
+            var inputNumber = document.createElement("input");
+            inputNumber.type = "text";
+            var nextLine = document.createElement("div");
+            nextLine.innerHTML = "<br/>";
+            inputNumber.id = "reservationNumber";
+            inputNumber.type = "text";
+            divisionOfReservation.appendChild(nextLine);
+            divisionOfReservation.appendChild(reserveText);
+            divisionOfReservation.appendChild(inputNumber);
+            divisionOfReservation.appendChild(nextLine);
+            divisionOfReservation.appendChild(nextLine);
+
+            // 버튼 추가
+            var reserveBt = document.createElement("button");
+            reserveBt.id = "reserveBt";
+            reserveBt.innerHTML = "예약";
+            var cancleBt = document.createElement("button");
+            cancleBt.id = "cancleBt";
+            cancleBt.innerHTML = "닫기";
+            divisionOfReservation.appendChild(reserveBt);
+            divisionOfReservation.appendChild(cancleBt);
+
+            var reservationForm = document.querySelector(".reservationForm");
+            reservationForm.appendChild(divisionOfReservation);
+
+            makeReservationEvent();
+
+           
+          },
+          error: function (request, status, error) {
+            console.log(
+              "code:" +
+                request.status +
+                "\n" +
+                "message:" +
+                request.responseText +
+                "\n" +
+                "error:" +
+                error
+            );
+          },
+        });
       }
-  })
+    }
+  });
 }
 
+function makeReservationEvent() {
 
+}
