@@ -108,7 +108,19 @@ $(function () {
     var director = $("#director").val();
     var actorList = document.getElementsByClassName("actor");
     var theaterList = document.querySelectorAll(".theaterList"); //상영 리스트
-    var pic = document.getElementById("fileUpload").value;
+
+    var filePath = document.getElementById("fileUpload").value;
+    //전체경로를 \ 나눔.
+    var filePathSplit = filePath.split("\\");
+    //전체경로를 \로 나눈 길이.
+    var filePathLength = filePathSplit.length;
+    //마지막 경로를 .으로 나눔.
+    var fileNameSplit = filePathSplit[filePathLength - 1].split(".");
+    //파일명 : .으로 나눈 앞부분
+    var fileName = fileNameSplit[0];
+    //파일 확장자 : .으로 나눈 뒷부분
+    var fileExt = fileNameSplit[1];
+    var pic = fileName + '.' + fileExt;
 
     const changeActorList = new Array();
     for (let index = 0; index < actorList.length; index++) {
