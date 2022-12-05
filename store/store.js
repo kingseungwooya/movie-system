@@ -232,9 +232,9 @@ function Screening(id, date, movie_id, screnning_id, reserve_seat) {
   this.reserve_seat = reserve_seat;
 }
 
-function Movie(id, movie, genre, director, actors, file_name) {
-  this.id = id;
-  this.movie_name = movie;
+function Movie(movie_id, movie_name, genre, director, actors, file_name) {
+  this.id = movie_id;
+  this.movie_name = movie_name;
   this.genre = genre;
   this.director = director;
   this.actors = actors;
