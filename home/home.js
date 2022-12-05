@@ -231,6 +231,42 @@ searchBt.addEventListener("click", function () {
       resultTable.appendChild(table);
       console.log(JSON.parse(data));
 
+      // 줄바꿈 요소
+      var nextLine = document.createElement("div");
+      nextLine.innerHTML =  '<br/>' ;
+
+      // 버튼 추가 
+      var searchTheaterBt = document.createElement("button");
+      searchTheaterBt.id = "searchTheaterBt";
+      searchTheaterBt.innerHTML = "상영관 검색하기";
+      searchTheaterBt.style.position = "absolute";
+      searchTheaterBt.style.left = "11%";
+
+      resultTable.appendChild(nextLine);
+      resultTable.appendChild(nextLine);
+      resultTable.appendChild(searchTheaterBt);
+
+      showSchedule();
+
+      //$(".resultTable").html(data.length);
+    },
+    error: function (request, status, error) {
+      console.log(
+        "code:" +
+          request.status +
+          "\n" +
+          "message:" +
+          request.responseText +
+          "\n" +
+          "error:" +
+          error
+      );
+    },
+  });
+});
+
+function reserve() {
+  
       // 예약 접수 부분 
       var divisionOfReservation = document.createElement("div");
       var reserveText = document.createTextNode("예약 할 인원 : ");
@@ -257,25 +293,22 @@ searchBt.addEventListener("click", function () {
       divisionOfReservation.appendChild(cancleBt);
 
       var reservationForm = document.querySelector(".reservationForm");
-
-
       reservationForm.appendChild(divisionOfReservation)
 
-      //$(".resultTable").html(data.length);
-    },
-    error: function (request, status, error) {
-      console.log(
-        "code:" +
-          request.status +
-          "\n" +
-          "message:" +
-          request.responseText +
-          "\n" +
-          "error:" +
-          error
-      );
-    },
-  });
-});
+      makeEvent();
+}
+
+function showSchedule() {
+  var searchTheaterBt = document.getElementById("searchTheaterBt");
+  searchTheaterBt.addEventListener("click", function() {
+    var selectedMovie = document.getElementsByName("selectMovie");
+    for (var radio of selectedMovie)
+      { // check된 값 확인 check된 값의 value에는 movie_id가 존재한다. !
+          if (radio.checked) {
+              var movie_id = radio.value;
+          }
+      }
+  })
+}
 
 
