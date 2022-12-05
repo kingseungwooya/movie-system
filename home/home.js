@@ -126,3 +126,27 @@ function Person(id, pw) {
   this.Name = id;
   this.Password = pw;
 }
+
+
+// 영화 검색 
+var key = document.getElementById("keyword");
+
+var searchBt = document.getElementById("searchBt");
+
+searchBt.addEventListener("click", function() {
+  $.ajax({
+    type: "post",
+    url: "search.php",
+    data: {
+      keyword : key
+    },
+    success: function (data) {
+        $(".resultTable").html(result);
+        console.log(data);
+    },
+    error: function (request, status, error) {
+        console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+    }
+});
+})
+
