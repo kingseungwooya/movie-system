@@ -10,17 +10,17 @@ $result = array();
 
 // 검색
 if ($lines != null) {
-  if (!empty($keyword)) {
-    for ($i = 0; $i < count($lines); $i++) {
-      $arr = explode("<br>", $lines[$i]);
-      $screening = json_decode($arr[0]);
-      $movie_id = $screening->movie_id;
-      if($movie_id == $keyword) {
-        array_push($result, $screening);
-      }
+    if (!empty($keyword)) {
+        for ($i = 0; $i < count($lines); $i++) {
+            $arr = explode("<br>", $lines[$i]);
+            $screening = json_decode($arr[0]);
+            $movie_id = $screening->movie_id;
+            if ($movie_id == $keyword) {
+                array_push($result, $screening);
+            }
 
+        }
     }
-  }
 
 }
 

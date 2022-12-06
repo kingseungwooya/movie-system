@@ -406,7 +406,6 @@ function showSchedule() {
 
 function makeReservationEvent() {
   var reserveBt = document.getElementById("reserveBt");
-  
 
   reserveBt.addEventListener("click", function () {
     var reservationNumber = document.getElementById("reservationNumber").value;
@@ -425,21 +424,26 @@ function makeReservationEvent() {
           if (total > 20) {
             alert("하나의 상영관의 최대 수용인원은 20명까지입니다.");
           } else {
-
             var movie_id = element["movie_id"];
             var screening_id = element["screening_id"];
             var id = element["id"];
 
-            
-            const requestObj = new RequestReserve(movie_id, screening_id, total, inputId);
+            const requestObj = new RequestReserve(
+              movie_id,
+              screening_id,
+              total,
+              inputId
+            );
             console.log("REQUEST 전송 FORM" + JSON.stringify(requestObj));
             $.ajax({
               type: "post",
               url: "reserve.php",
-              data: { requestObject: JSON.stringify(requestObj),
-              requestId: id },
+              data: {
+                requestObject: JSON.stringify(requestObj),
+                requestId: id,
+              },
               success: function (data) {
-                alert("예약에 성공하셨습니다.")
+                alert("예약에 성공하셨습니다.");
                 console.log(data);
               },
               error: function (request, status, error) {
@@ -463,11 +467,11 @@ function makeReservationEvent() {
 }
 
 var reserveIdGenerator = 0;
-// 예약 정보 저장
-function RequestReserve( movie_id, s_id, reserve_num, member_id ) {
+// 예약 정보 저장 객체
+function RequestReserve(movie_id, s_id, reserve_num, member_id) {
   this.id = "u" + reserveIdGenerator;
   this.movie_id = movie_id;
   this.s_id = s_id;
   this.reserve_num = reserve_num;
-  this.member_id = member_id
+  this.member_id = member_id;
 }

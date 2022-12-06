@@ -21,7 +21,7 @@ if ($lines != null) {
       $actors = $movie->actors;
       //echo $arr[0];
       //echo $movie_name;
-     // echo json_encode($movie, JSON_UNESCAPED_UNICODE);
+      // echo json_encode($movie, JSON_UNESCAPED_UNICODE);
 
 
       if (!strcasecmp($keyword, substr($movie_name, 0, $wordLength))) {
@@ -29,12 +29,12 @@ if ($lines != null) {
       } else if (!strcasecmp($keyword, substr($director, 0, $wordLength))) {
         array_push($result, $movie);
       } else {
-        for ($i=0; $i < count($actors) ; $i++) { 
+        for ($i = 0; $i < count($actors); $i++) {
           if (!strcasecmp($keyword, substr($actors[$i], 0, $wordLength))) {
             array_push($result, $movie);
           }
         }
-      }   
+      }
     }
   }
 

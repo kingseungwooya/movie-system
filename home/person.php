@@ -1,8 +1,8 @@
 <?php
-    $data =  $_POST['personObject'];
-    
-    $myfile = fopen("person.json", "a");
-    fwrite($myfile, $data ."\n");
+$data = $_POST['personObject'];
 
-    echo $data -> Name;
+$myfile = fopen("person.json", "a");
+fwrite($myfile, $data . "\n");
+
+echo $data->Name;
 ?>
