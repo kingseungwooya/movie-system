@@ -12,7 +12,8 @@ document.querySelector(".bg").addEventListener("click", close);
 
 var submitBt = document.getElementById("submitBt");
 var signInBt = document.getElementById("signInBt");
-var inputId;
+let inputId;
+let isLogin = false;
 // 로그인
 submitBt.addEventListener("click", function () {
   inputId = document.getElementById("loginId").value;
@@ -33,7 +34,8 @@ submitBt.addEventListener("click", function () {
       aNode.append(textNode);
       appendFirst(topBar, aNode);
     }
-
+    // 로그인 상태 true로 저장
+    isLogin = true;
     // 교체할 노드 만들기
     var newOpenBt = document.createElement("button");
     newOpenBt.setAttribute("class", "openBtn");
@@ -49,7 +51,6 @@ function logoutClick() {
   var openBtn = document.querySelector(".openBtn");
   var topBar = document.getElementById("topBar");
   var textNew;
-  console.log("려시레료");
   if (openBtn.textContent == "로그아웃") {
     console.log("로그아웃");
     textNew = document.createTextNode("로그인");
@@ -329,7 +330,7 @@ function showSchedule() {
               var radiobox = document.createElement("input");
               radiobox.type = "radio";
               radiobox.setAttribute("name", "selectSchedule");
-              radiobox.value = id;
+              radiobox.value = JSON.stringify(element);
               heading_1.appendChild(radiobox);
 
               // 테이블 정보
@@ -384,8 +385,6 @@ function showSchedule() {
             reservationForm.appendChild(divisionOfReservation);
 
             makeReservationEvent();
-
-           
           },
           error: function (request, status, error) {
             console.log(
@@ -406,5 +405,69 @@ function showSchedule() {
 }
 
 function makeReservationEvent() {
+  var reserveBt = document.getElementById("reserveBt");
+  
 
+  reserveBt.addEventListener("click", function () {
+    var reservationNumber = document.getElementById("reservationNumber").value;
+    if (isLogin == false) {
+      alert("로그인 후 영화 예약이 가능합니다.");
+    } else if (Number(reservationNumber) > 10) {
+      alert("한번에 10명까지만 예약 가능합니다.");
+    } else {
+      var selectSchedule = document.getElementsByName("selectSchedule");
+      for (var radio of selectSchedule) {
+        // check된 값 확인 check된 값의 value에는 movie_id가 존재한다. !
+        if (radio.checked) {
+          var element = JSON.parse(radio.value);
+          var reserveSeat = element["reserve_seat"];
+          var total = Number(reserveSeat) + Number(reservationNumber);
+          if (total > 20) {
+            alert("하나의 상영관의 최대 수용인원은 20명까지입니다.");
+          } else {
+
+            var movie_id = element["movie_id"];
+            var screening_id = element["screening_id"];
+            var id = element["id"];
+
+            
+            const requestObj = new RequestReserve(movie_id, screening_id, total, inputId);
+            console.log("REQUEST 전송 FORM" + JSON.stringify(requestObj));
+            $.ajax({
+              type: "post",
+              url: "reserve.php",
+              data: { requestObject: JSON.stringify(requestObj),
+              requestId: id },
+              success: function (data) {
+                alert("예약에 성공하셨습니다.")
+                console.log(data);
+              },
+              error: function (request, status, error) {
+                console.log(
+                  "code:" +
+                    request.status +
+                    "\n" +
+                    "message:" +
+                    request.responseText +
+                    "\n" +
+                    "error:" +
+                    error
+                );
+              },
+            });
+          }
+        }
+      }
+    }
+  });
+}
+
+var reserveIdGenerator = 0;
+// 예약 정보 저장
+function RequestReserve( movie_id, s_id, reserve_num, member_id ) {
+  this.id = "u" + reserveIdGenerator;
+  this.movie_id = movie_id;
+  this.s_id = s_id;
+  this.reserve_num = reserve_num;
+  this.member_id = member_id
 }
